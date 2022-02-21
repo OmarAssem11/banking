@@ -1,9 +1,20 @@
-import 'package:banking/components/themes.dart';
 import 'package:banking/firebase_options.dart';
 import 'package:banking/layouts/home_layout.dart';
-import 'package:banking/provider/global_provider.dart';
+import 'package:banking/providers/bottom_nav_bar_provider.dart';
+import 'package:banking/providers/card_provider.dart';
+import 'package:banking/providers/login_provider.dart';
+import 'package:banking/providers/profile_provider.dart';
+import 'package:banking/providers/register_provider.dart';
+import 'package:banking/providers/transactions_provider.dart';
+import 'package:banking/screens/edit_profile_screen.dart';
+import 'package:banking/screens/home_screen.dart';
 import 'package:banking/screens/login_screen.dart';
 import 'package:banking/screens/register_screen.dart';
+import 'package:banking/screens/settings_screen.dart';
+import 'package:banking/screens/stats_screen.dart';
+import 'package:banking/screens/wallet_screen.dart';
+import 'package:banking/theme/theme_provider.dart';
+import 'package:banking/theme/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,18 +31,45 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<GlobalProvider>(
-      create: (_) => GlobalProvider(),
-      builder: (BuildContext context, Widget? child) => MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeProvider>(
+          create: (_) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider<RegisterProvider>(
+          create: (_) => RegisterProvider(),
+        ),
+        ChangeNotifierProvider<LoginProvider>(
+          create: (_) => LoginProvider(),
+        ),
+        ChangeNotifierProvider<CardProvider>(
+          create: (_) => CardProvider(),
+        ),
+        ChangeNotifierProvider<BottomNavBarProvider>(
+          create: (_) => BottomNavBarProvider(),
+        ),
+        ChangeNotifierProvider<TransactionsProvider>(
+          create: (_) => TransactionsProvider(),
+        ),
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (_) => ProfileProvider(),
+        )
+      ],
+      builder: (BuildContext context, Widget? _) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const HomeLayout(),
-        themeMode: Provider.of<GlobalProvider>(context).getTheme(),
+        home: LoginScreen(),
+        themeMode: Provider.of<ThemeProvider>(context).getTheme(),
         theme: lightTheme,
         darkTheme: darkTheme,
         routes: {
           HomeLayout.routeName: (context) => const HomeLayout(),
           LoginScreen.routeName: (context) => LoginScreen(),
           RegisterScreen.routeName: (context) => RegisterScreen(),
+          HomeScreen.routeName: (context) => const HomeScreen(),
+          StatsScreen.routeName: (context) => const StatsScreen(),
+          WalletScreen.routeName: (context) => const WalletScreen(),
+          SettingsScreen.routeName: (context) => const SettingsScreen(),
+          EditProfileScreen.routeName: (context) => const EditProfileScreen(),
         },
       ),
     );

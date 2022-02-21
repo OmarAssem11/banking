@@ -1,17 +1,17 @@
-import 'package:banking/provider/global_provider.dart';
+import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({Key? key}) : super(key: key);
+  static const routeName = '/wallet';
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final provider = Provider.of<GlobalProvider>(context);
+    final provider = Provider.of<ThemeProvider>(context);
     final dateFormat = DateFormat('MMMM');
     return Scaffold(
-      backgroundColor: theme.colorScheme.onPrimary,
       body: Column(
         children: [
           Container(

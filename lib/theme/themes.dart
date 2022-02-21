@@ -4,14 +4,14 @@ final lightTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xff150050),
-    onPrimary: Color(0xffffffff),
+    onPrimary: Colors.white,
     secondary: Color(0xff52616B),
-    onSecondary: Color(0xff000000),
+    onSecondary: Colors.black,
     error: Color.fromARGB(255, 122, 42, 47),
     onError: Color.fromARGB(255, 156, 25, 145),
-    background: Color(0xffffffff),
+    background: Colors.white,
     onBackground: Color.fromARGB(255, 59, 42, 207),
-    surface: Color.fromARGB(255, 214, 213, 213),
+    surface: Color.fromARGB(255, 235, 232, 232),
     onSurface: Color.fromARGB(255, 10, 85, 95),
   ),
   textTheme: const TextTheme(
@@ -47,11 +47,31 @@ final lightTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: Colors.black,
     ),
+    headline6: TextStyle(
+      fontSize: 20,
+      color: Colors.black,
+    ),
     labelMedium: TextStyle(
       color: Colors.grey,
       fontSize: 14,
     ),
   ),
+  appBarTheme: const AppBarTheme(
+    iconTheme: IconThemeData(color: Colors.black),
+    titleTextStyle: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+    backgroundColor: Colors.white,
+    shape: Border(
+      bottom: BorderSide(
+        color: Colors.white,
+      ),
+    ),
+    elevation: 0,
+  ),
+  scaffoldBackgroundColor: Colors.white,
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     linearMinHeight: 10,
     color: Color(0xff150050),
@@ -62,10 +82,10 @@ final lightTheme = ThemeData(
 final darkTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
-    primary: Color(0xff000000),
-    onPrimary: Color(0xff000000),
+    primary: Colors.black,
+    onPrimary: Colors.black,
     secondary: Color.fromARGB(255, 171, 174, 177),
-    onSecondary: Color(0xffffffff),
+    onSecondary: Colors.white,
     error: Color.fromARGB(255, 122, 42, 47),
     onError: Color.fromARGB(255, 156, 25, 145),
     background: Color.fromARGB(255, 13, 4, 39),
@@ -106,11 +126,28 @@ final darkTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: Colors.white,
     ),
+    headline6: TextStyle(
+      fontSize: 20,
+      color: Colors.white,
+    ),
     labelMedium: TextStyle(
       color: Colors.grey,
       fontSize: 14,
     ),
   ),
+  appBarTheme: const AppBarTheme(
+    iconTheme: IconThemeData(color: Colors.white),
+    titleTextStyle: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+    backgroundColor: Colors.black,
+    shape: Border(
+      bottom: BorderSide(),
+    ),
+  ),
+  scaffoldBackgroundColor: Colors.black,
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     linearMinHeight: 10,
     color: Color.fromARGB(255, 170, 23, 12),

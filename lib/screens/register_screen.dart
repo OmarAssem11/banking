@@ -1,27 +1,26 @@
-import 'package:banking/components/components.dart';
-import 'package:banking/components/constants.dart';
-import 'package:banking/provider/global_provider.dart';
+import 'package:banking/components/custom_button_style.dart';
+import 'package:banking/components/custom_text_form_field.dart';
+import 'package:banking/components/password_text_form_field.dart';
+import 'package:banking/providers/register_provider.dart';
 import 'package:banking/screens/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
   static const routeName = '/register';
   final emailController = TextEditingController();
-  final firstNameController = TextEditingController();
+  final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
-  final lastNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GlobalProvider>(context);
+    final registerProvider = Provider.of<RegisterProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.colorScheme.onPrimary,
       resizeToAvoidBottomInset: false,
       body: Form(
         key: _formKey,
@@ -41,171 +40,42 @@ class RegisterScreen extends StatelessWidget {
                 style: theme.textTheme.subtitle1,
               ),
               const SizedBox(height: 20),
-              Row(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      constraints: const BoxConstraints(maxWidth: 155),
-                      labelText: 'First name',
-                      labelStyle: TextStyle(color: theme.colorScheme.secondary),
-                      hintStyle: TextStyle(color: theme.colorScheme.secondary),
-                      hintText: 'First name',
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                    ),
-                    controller: firstNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Name can't be empty";
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(width: 10),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      constraints: const BoxConstraints(maxWidth: 155),
-                      labelText: 'Last name',
-                      labelStyle: TextStyle(color: theme.colorScheme.secondary),
-                      hintStyle: TextStyle(color: theme.colorScheme.secondary),
-                      hintText: 'Last name',
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                    ),
-                    controller: lastNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Name can't be empty";
-                      }
-                      return null;
-                    },
-                  ),
-                ],
+              CustomTextFormField(
+                controller: nameController,
+                text: 'Full name',
+                prefix: Icons.account_circle_outlined,
+                keyboardType: TextInputType.name,
               ),
               const SizedBox(height: 16),
-              customTextFormField(
-                context: context,
+              CustomTextFormField(
                 controller: emailController,
                 text: 'Email address',
                 prefix: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
-              passwordTextFormField(
-                context: context,
+              PasswordTextFormField(
                 controller: passwordController,
               ),
               const SizedBox(height: 16),
-              customTextFormField(
-                context: context,
+              CustomTextFormField(
                 controller: phoneController,
                 text: 'Phone number',
                 prefix: Icons.phone_outlined,
                 keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  customDropDownButton(
-                    context: context,
-                    list: months,
-                    hint: 'Month',
-                    amount: 1,
-                    onChange: provider.monthOnChange,
-                  ),
-                  const SizedBox(width: 10),
-                  if (provider.month == 1 ||
-                      provider.month == 3 ||
-                      provider.month == 5 ||
-                      provider.month == 7 ||
-                      provider.month == 8 ||
-                      provider.month == 10 ||
-                      provider.month == 12)
-                    customDropDownButton(
-                      context: context,
-                      list: days31,
-                      hint: 'Day',
-                      amount: 1,
-                      onChange: provider.dayOnChange,
-                    ),
-                  if (provider.month == 4 ||
-                      provider.month == 6 ||
-                      provider.month == 9 ||
-                      provider.month == 11)
-                    customDropDownButton(
-                      context: context,
-                      list: days30,
-                      hint: 'Day',
-                      amount: 1,
-                      onChange: provider.dayOnChange,
-                    ),
-                  if (provider.month == 2)
-                    customDropDownButton(
-                      context: context,
-                      list: days29,
-                      hint: 'Day',
-                      amount: 1,
-                      onChange: provider.dayOnChange,
-                    ),
-                  if (provider.month == 0)
-                    customDropDownButton(
-                      context: context,
-                      list: days31,
-                      hint: 'Day',
-                      amount: 1,
-                    ),
-                  const SizedBox(width: 10),
-                  customDropDownButton(
-                    context: context,
-                    list: years.reversed,
-                    hint: 'Year',
-                    amount: 1923,
-                    onChange: provider.yearOnChange,
-                  ),
-                ],
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 style: customButtonStyle(context: context),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    try {
-                      provider.registerUser(
-                        context: context,
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        email: emailController.text,
-                        password: passwordController.text,
-                        phone: phoneController.text,
-                        dateOfBirth:
-                            '${provider.day}/${provider.month}/${provider.year}',
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
-                        Fluttertoast.showToast(
-                          msg: 'Weak password',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                        );
-                      } else if (e.code == 'email-already-in-use') {
-                        Fluttertoast.showToast(
-                          msg: 'Email already in use',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                        );
-                      } else if (e.code == 'invalid-email') {
-                        Fluttertoast.showToast(
-                          msg: 'Invalid email',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                        );
-                      }
-                    }
+                    registerProvider.register(
+                      context: context,
+                      name: nameController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                      phone: phoneController.text,
+                    );
                   }
                 },
                 child: const Text(
@@ -223,7 +93,7 @@ class RegisterScreen extends StatelessWidget {
                     'Already have an account?',
                     style: TextStyle(
                       fontSize: 16,
-                      color: provider.isDark
+                      color: themeProvider.isDark
                           ? theme.colorScheme.secondary
                           : Colors.black,
                     ),
@@ -235,7 +105,7 @@ class RegisterScreen extends StatelessWidget {
                       'LOGIN',
                       style: TextStyle(
                         fontSize: 16,
-                        color: !provider.isDark
+                        color: !themeProvider.isDark
                             ? theme.colorScheme.onBackground
                             : const Color.fromARGB(255, 57, 12, 136),
                       ),

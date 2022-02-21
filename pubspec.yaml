@@ -31,11 +31,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.3.6
   firebase_core: ^1.12.0
+  firebase_storage: ^10.2.7
   fl_chart: ^0.45.0
   flutter:
     sdk: flutter
   flutter_credit_card: ^3.0.1
   fluttertoast: ^8.0.8
+  image_picker: ^0.8.4+9
   intl: ^0.17.0
   provider: ^6.0.2
   sliding_up_panel: ^2.0.0+1

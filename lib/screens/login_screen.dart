@@ -1,12 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:banking/components/components.dart';
-import 'package:banking/layouts/home_layout.dart';
-import 'package:banking/provider/global_provider.dart';
+import 'package:banking/components/custom_button_style.dart';
+import 'package:banking/components/custom_text_form_field.dart';
+import 'package:banking/components/password_text_form_field.dart';
+import 'package:banking/providers/login_provider.dart';
 import 'package:banking/screens/register_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -17,10 +15,10 @@ class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GlobalProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context);
     final themeColor = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: themeColor.onPrimary,
       resizeToAvoidBottomInset: false,
       body: Form(
         key: _formKey,
@@ -40,16 +38,14 @@ class LoginScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               const SizedBox(height: 20),
-              customTextFormField(
-                context: context,
+              CustomTextFormField(
                 controller: emailController,
                 text: 'Email address',
                 prefix: Icons.email_outlined,
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 16),
-              passwordTextFormField(
-                context: context,
+              PasswordTextFormField(
                 controller: passwordController,
               ),
               const SizedBox(height: 20),
@@ -57,35 +53,11 @@ class LoginScreen extends StatelessWidget {
                 style: customButtonStyle(context: context),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    UserCredential? token;
-                    try {
-                      token = await FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-                        Fluttertoast.showToast(
-                          msg: 'User not found',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                        );
-                      } else if (e.code == 'wrong-password') {
-                        Fluttertoast.showToast(
-                          msg: 'Wrong password',
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 5,
-                        );
-                      }
-                    }
-                    if (token != null) {
-                      Navigator.of(context).popUntil((route) => route.isFirst);
-                      Navigator.of(context)
-                          .pushReplacementNamed(HomeLayout.routeName);
-                    }
+                    await loginProvider.login(
+                      context: context,
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
                   }
                 },
                 child: const Text(
@@ -103,8 +75,9 @@ class LoginScreen extends StatelessWidget {
                     "Don't have an account?",
                     style: TextStyle(
                       fontSize: 16,
-                      color:
-                          provider.isDark ? themeColor.secondary : Colors.black,
+                      color: themeProvider.isDark
+                          ? themeColor.secondary
+                          : Colors.black,
                     ),
                   ),
                   TextButton(
@@ -115,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: !provider.isDark
+                        color: !themeProvider.isDark
                             ? themeColor.onBackground
                             : const Color.fromARGB(255, 57, 12, 136),
                       ),
