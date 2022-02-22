@@ -1,7 +1,5 @@
-import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -9,7 +7,6 @@ class WalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final provider = Provider.of<ThemeProvider>(context);
     final dateFormat = DateFormat('MMMM');
     return Scaffold(
       body: Column(
@@ -37,7 +34,7 @@ class WalletScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: provider.isDark ? Colors.white : Colors.black,
+                    color: theme.colorScheme.onSecondary,
                   ),
                 ),
               ],
@@ -83,7 +80,7 @@ class WalletScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: provider.isDark ? Colors.white : Colors.black,
+                    color: theme.colorScheme.onSecondary,
                   ),
                 ),
                 const SizedBox(height: 4),

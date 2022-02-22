@@ -1,9 +1,8 @@
-import 'package:banking/components/custom_button_style.dart';
+import 'package:banking/components/custom_button.dart';
 import 'package:banking/components/custom_text_form_field.dart';
 import 'package:banking/components/password_text_form_field.dart';
 import 'package:banking/providers/register_provider.dart';
 import 'package:banking/screens/login_screen.dart';
-import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerProvider = Provider.of<RegisterProvider>(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
     final theme = Theme.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -65,9 +63,9 @@ class RegisterScreen extends StatelessWidget {
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                style: customButtonStyle(context: context),
-                onPressed: () {
+              CustomButton(
+                text: 'register',
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     registerProvider.register(
                       context: context,
@@ -78,12 +76,6 @@ class RegisterScreen extends StatelessWidget {
                     );
                   }
                 },
-                child: const Text(
-                  'REGISTER',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
               ),
               const SizedBox(height: 8),
               Row(
@@ -93,21 +85,17 @@ class RegisterScreen extends StatelessWidget {
                     'Already have an account?',
                     style: TextStyle(
                       fontSize: 16,
-                      color: themeProvider.isDark
-                          ? theme.colorScheme.secondary
-                          : Colors.black,
+                      color: theme.colorScheme.onTertiary,
                     ),
                   ),
                   TextButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(LoginScreen.routeName),
+                    onPressed: () => Navigator.of(context)
+                        .pushReplacementNamed(LoginScreen.routeName),
                     child: Text(
                       'LOGIN',
                       style: TextStyle(
                         fontSize: 16,
-                        color: !themeProvider.isDark
-                            ? theme.colorScheme.onBackground
-                            : const Color.fromARGB(255, 57, 12, 136),
+                        color: theme.colorScheme.tertiaryContainer,
                       ),
                     ),
                   ),

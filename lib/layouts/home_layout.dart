@@ -1,6 +1,5 @@
 import 'package:banking/providers/bottom_nav_bar_provider.dart';
 import 'package:banking/providers/login_provider.dart';
-import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +10,6 @@ class HomeLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeColor = Theme.of(context).colorScheme;
     final navBarProvider = Provider.of<BottomNavBarProvider>(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -24,7 +22,6 @@ class HomeLayout extends StatelessWidget {
             color: themeColor.onPrimary,
           ),
         ),
-        elevation: !themeProvider.isDark ? 0 : null,
         actions: [
           CircleAvatar(
             backgroundImage: NetworkImage(

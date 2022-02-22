@@ -11,18 +11,19 @@ class CardProvider with ChangeNotifier {
     required String cardNumber,
     required String cvvCode,
     required String expiryDate,
-    required String pinCode,
-    required double balance,
   }) {
-    final uId =
-        Provider.of<LoginProvider>(context, listen: false).userModel.uId;
+    final loginProvider = Provider.of<LoginProvider>(
+      context,
+      listen: false,
+    );
+    final uId = loginProvider.userModel.uId;
     final card = CardModel(
       cardHolderName: cardHolderName,
       cardNumber: cardNumber,
       cvvCode: cvvCode,
       expiryDate: expiryDate,
-      pinCode: pinCode,
-      balance: balance,
+      pinCode: '',
+      balance: 0.0,
     );
     FirebaseFirestore.instance
         .collection('users')
@@ -32,5 +33,6 @@ class CardProvider with ChangeNotifier {
         .set(card.toMap())
         .then((_) {})
         .catchError((_) {});
+    loginProvider.cardModel = card;
   }
 }

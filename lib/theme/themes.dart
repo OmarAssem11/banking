@@ -13,6 +13,10 @@ final lightTheme = ThemeData(
     onBackground: Color.fromARGB(255, 59, 42, 207),
     surface: Color.fromARGB(255, 235, 232, 232),
     onSurface: Color.fromARGB(255, 10, 85, 95),
+    outline: Colors.white,
+    tertiary: Colors.white,
+    onTertiary: Colors.black,
+    tertiaryContainer: Color.fromARGB(255, 59, 42, 207),
   ),
   textTheme: const TextTheme(
     subtitle1: TextStyle(
@@ -77,6 +81,24 @@ final lightTheme = ThemeData(
     color: Color(0xff150050),
     linearTrackColor: Colors.white,
   ),
+  bottomSheetTheme: const BottomSheetThemeData(
+    backgroundColor: Colors.white,
+  ),
+  snackBarTheme: const SnackBarThemeData(
+    backgroundColor: Color.fromARGB(255, 2, 117, 5),
+    contentTextStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  dialogTheme: const DialogTheme(
+    titleTextStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    backgroundColor: Colors.white,
+  ),
 );
 
 final darkTheme = ThemeData(
@@ -92,6 +114,10 @@ final darkTheme = ThemeData(
     onBackground: Color.fromARGB(255, 33, 10, 73),
     surface: Color.fromARGB(255, 7, 1, 27),
     onSurface: Color.fromARGB(255, 82, 83, 85),
+    outline: Color.fromARGB(255, 171, 174, 177),
+    tertiary: Color.fromARGB(255, 7, 1, 27),
+    onTertiary: Color.fromARGB(255, 171, 174, 177),
+    tertiaryContainer: Color.fromARGB(255, 57, 12, 136),
   ),
   textTheme: const TextTheme(
     subtitle1: TextStyle(
@@ -152,5 +178,23 @@ final darkTheme = ThemeData(
     linearMinHeight: 10,
     color: Color.fromARGB(255, 170, 23, 12),
     linearTrackColor: Color.fromARGB(255, 33, 10, 73),
+  ),
+  bottomSheetTheme: const BottomSheetThemeData(
+    backgroundColor: Color.fromARGB(255, 7, 1, 27),
+  ),
+  snackBarTheme: const SnackBarThemeData(
+    backgroundColor: Color.fromARGB(255, 2, 117, 5),
+    contentTextStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  dialogTheme: const DialogTheme(
+    titleTextStyle: TextStyle(
+      color: Colors.white,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    backgroundColor: Colors.black,
   ),
 );

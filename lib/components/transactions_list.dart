@@ -1,7 +1,5 @@
 import 'package:banking/components/transaction_widget.dart';
-import 'package:banking/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class TransactionsList extends StatefulWidget {
   const TransactionsList({Key? key}) : super(key: key);
@@ -13,13 +11,11 @@ class _TransactionsListState extends State<TransactionsList> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
-          color:
-              themeProvider.isDark ? theme.colorScheme.surface : Colors.white,
+          color: theme.colorScheme.tertiary,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +34,7 @@ class _TransactionsListState extends State<TransactionsList> {
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
-                itemBuilder: (_, index) => const TransactionWidget(
+                itemBuilder: (_, __) => const TransactionWidget(
                   name: 'Mohamed Salem',
                   amount: 860,
                   imageUrl:

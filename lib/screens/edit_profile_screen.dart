@@ -1,15 +1,21 @@
+import 'package:banking/components/change_image_widget.dart';
 import 'package:banking/components/profile_settings_widget.dart';
 import 'package:banking/providers/login_provider.dart';
-import 'package:banking/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
   static const routeName = '/edit_profile';
   @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  @override
   Widget build(BuildContext context) {
     final user = Provider.of<LoginProvider>(context).userModel;
+    final controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit profile'),
@@ -31,33 +37,30 @@ class EditProfileScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.headline3,
           ),
           const SizedBox(height: 16),
+          const ChangeImageWidget(),
           ProfileSettingsWidget(
             icon: Icons.account_circle_outlined,
-            text: 'Change name',
-            onTap: () {},
+            text: 'name',
+            controller: controller,
+            keyboardType: TextInputType.name,
           ),
           ProfileSettingsWidget(
             icon: Icons.email_outlined,
-            text: 'Change email address',
-            onTap: () {},
+            text: 'email address',
+            controller: controller,
+            keyboardType: TextInputType.emailAddress,
           ),
           ProfileSettingsWidget(
             icon: Icons.lock_outline,
-            text: 'Change password',
-            onTap: () {},
-          ),
-          ProfileSettingsWidget(
-            icon: Icons.image_rounded,
-            text: 'Change profile image',
-            onTap: () => Provider.of<ProfileProvider>(
-              context,
-              listen: false,
-            ).changeProfileImage(oldModel: user),
+            text: 'password',
+            controller: controller,
+            keyboardType: TextInputType.visiblePassword,
           ),
           ProfileSettingsWidget(
             icon: Icons.phone_outlined,
-            text: 'Change phone number',
-            onTap: () {},
+            text: 'phone number',
+            controller: controller,
+            keyboardType: TextInputType.phone,
           ),
         ],
       ),

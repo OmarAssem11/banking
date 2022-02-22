@@ -7,11 +7,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class LoginProvider with ChangeNotifier {
   late String _uId;
   late UserModel userModel;
   CardModel? cardModel;
+
+  final _instance = FirebaseFirestore.instance;
 
   Future<void> login({
     required BuildContext context,
@@ -32,9 +35,10 @@ class LoginProvider with ChangeNotifier {
         Navigator.of(context).pushReplacementNamed(HomeLayout.routeName);
       }
     }).catchError((error) {
-      final start = error.toString().indexOf(']') + 2;
+      error as FirebaseAuthException;
+      final e = error.code.replaceAll('-', ' ');
       Fluttertoast.showToast(
-        msg: error.toString().substring(start),
+        msg: toBeginningOfSentenceCase(e)!,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 5,
@@ -43,13 +47,12 @@ class LoginProvider with ChangeNotifier {
   }
 
   Future<void> getUserModel() async {
-    final snapshot =
-        await FirebaseFirestore.instance.collection('users').doc(_uId).get();
+    final snapshot = await _instance.collection('users').doc(_uId).get();
     userModel = UserModel.fromJson(snapshot.data()!);
   }
 
   Future<void> getCardModel() async {
-    final snapshot = await FirebaseFirestore.instance
+    final snapshot = await _instance
         .collection('users')
         .doc(_uId)
         .collection('card')

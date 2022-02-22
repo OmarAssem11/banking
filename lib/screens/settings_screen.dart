@@ -1,3 +1,4 @@
+import 'package:banking/components/logout_widget.dart';
 import 'package:banking/components/setting_switch.dart';
 import 'package:banking/components/settings_widget.dart';
 import 'package:banking/screens/edit_profile_screen.dart';
@@ -34,6 +35,7 @@ class SettingsScreen extends StatelessWidget {
             value: true,
             onChange: (_) {},
           ),
+          const LogoutWidget(),
         ],
       ),
     );
