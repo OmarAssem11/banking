@@ -27,6 +27,8 @@ class _CustomButtonState extends State<CustomButton> {
       onPressed: () {
         setState(() => isLoading = true);
         widget.onPressed();
+        Future.delayed(const Duration(milliseconds: 1500))
+            .then((_) => setState(() => isLoading = false));
       },
       child: isLoading
           ? CircularProgressIndicator(

@@ -1,8 +1,8 @@
-import 'package:banking/components/custom_button.dart';
-import 'package:banking/components/custom_text_form_field.dart';
-import 'package:banking/components/password_text_form_field.dart';
 import 'package:banking/providers/login_provider.dart';
 import 'package:banking/screens/register_screen.dart';
+import 'package:banking/shared/components/custom_button.dart';
+import 'package:banking/shared/components/custom_text_form_field.dart';
+import 'package:banking/shared/components/password_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

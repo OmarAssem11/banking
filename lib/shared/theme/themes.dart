@@ -85,7 +85,6 @@ final lightTheme = ThemeData(
     backgroundColor: Colors.white,
   ),
   snackBarTheme: const SnackBarThemeData(
-    backgroundColor: Color.fromARGB(255, 2, 117, 5),
     contentTextStyle: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.bold,
@@ -183,7 +182,6 @@ final darkTheme = ThemeData(
     backgroundColor: Color.fromARGB(255, 7, 1, 27),
   ),
   snackBarTheme: const SnackBarThemeData(
-    backgroundColor: Color.fromARGB(255, 2, 117, 5),
     contentTextStyle: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.bold,

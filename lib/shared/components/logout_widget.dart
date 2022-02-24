@@ -1,5 +1,6 @@
 import 'package:banking/providers/bottom_nav_bar_provider.dart';
-import 'package:banking/providers/login_provider.dart';
+import 'package:banking/providers/card_provider.dart';
+import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,15 +70,21 @@ class LogoutWidget extends StatelessWidget {
 
   void logout(BuildContext context) {
     final navigator = Navigator.of(context);
+    final transactionsProvider = Provider.of<TransactionsProvider>(
+      context,
+      listen: false,
+    );
     navigator.popUntil((route) => route.isFirst);
     navigator.pushReplacementNamed(LoginScreen.routeName);
     Provider.of<BottomNavBarProvider>(
       context,
       listen: false,
     ).selectedScreenIndex = 0;
-    Provider.of<LoginProvider>(
+    Provider.of<CardProvider>(
       context,
       listen: false,
     ).cardModel = null;
+    transactionsProvider.transactions.clear();
+    transactionsProvider.transactionsUsers.clear();
   }
 }

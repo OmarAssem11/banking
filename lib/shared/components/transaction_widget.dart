@@ -5,10 +5,12 @@ class TransactionWidget extends StatelessWidget {
   final String name;
   final double amount;
   final String imageUrl;
+  final DateTime dateTime;
   const TransactionWidget({
     required this.name,
     required this.amount,
     required this.imageUrl,
+    required this.dateTime,
   });
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class TransactionWidget extends StatelessWidget {
                 style: theme.textTheme.headline2,
               ),
               Text(
-                dateFormat.format(DateTime.now()),
+                dateFormat.format(dateTime),
                 style: theme.textTheme.subtitle2,
               ),
             ],

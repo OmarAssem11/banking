@@ -1,8 +1,8 @@
-import 'package:banking/components/logout_widget.dart';
-import 'package:banking/components/setting_switch.dart';
-import 'package:banking/components/settings_widget.dart';
 import 'package:banking/screens/edit_profile_screen.dart';
-import 'package:banking/theme/theme_provider.dart';
+import 'package:banking/shared/components/logout_widget.dart';
+import 'package:banking/shared/components/setting_switch.dart';
+import 'package:banking/shared/components/settings_widget.dart';
+import 'package:banking/shared/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

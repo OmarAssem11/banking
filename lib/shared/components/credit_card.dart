@@ -1,7 +1,6 @@
-import 'package:banking/components/custom_button.dart';
-import 'package:banking/components/custom_text_form_field.dart';
 import 'package:banking/providers/card_provider.dart';
-import 'package:banking/providers/login_provider.dart';
+import 'package:banking/shared/components/custom_button.dart';
+import 'package:banking/shared/components/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,7 @@ class _CreditCardState extends State<CreditCard> {
   final cvvCodeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final card = Provider.of<LoginProvider>(context).cardModel;
+    final card = Provider.of<CardProvider>(context).cardModel;
     return card == null
         ? InkWell(
             onTap: _addCard,
@@ -133,6 +132,7 @@ class _CreditCardState extends State<CreditCard> {
                       );
                       Navigator.of(context).pop();
                       final snackBar = SnackBar(
+                        backgroundColor: const Color.fromARGB(255, 2, 117, 5),
                         content: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [

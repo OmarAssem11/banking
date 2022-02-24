@@ -70,8 +70,51 @@ class ProfileProvider with ChangeNotifier {
   }) {
     _getImage().then((value) {
       if (value != null) {
-        _uploadImage(oldModel: oldModel, image: value);
+        _uploadImage(
+          oldModel: oldModel,
+          image: value,
+        );
       }
     }).catchError((_) {});
+  }
+
+  void changeName({
+    required UserModel oldModel,
+    required String newName,
+  }) {
+    _updateUser(
+      oldModel: oldModel,
+      name: newName,
+    );
+  }
+
+  void changeEmail({
+    required UserModel oldModel,
+    required String newEmail,
+  }) {
+    _updateUser(
+      oldModel: oldModel,
+      email: newEmail,
+    );
+  }
+
+  void changePassword({
+    required UserModel oldModel,
+    required String newPassword,
+  }) {
+    _updateUser(
+      oldModel: oldModel,
+      password: newPassword,
+    );
+  }
+
+  void changePhone({
+    required UserModel oldModel,
+    required String newPhone,
+  }) {
+    _updateUser(
+      oldModel: oldModel,
+      phone: newPhone,
+    );
   }
 }

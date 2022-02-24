@@ -1,5 +1,5 @@
-import 'package:banking/components/credit_card.dart';
-import 'package:banking/components/transactions_list.dart';
+import 'package:banking/shared/components/credit_card.dart';
+import 'package:banking/shared/components/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
