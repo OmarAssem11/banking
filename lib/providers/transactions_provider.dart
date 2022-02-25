@@ -1,8 +1,11 @@
+import 'package:banking/models/card_model.dart';
 import 'package:banking/models/transaction_model.dart';
 import 'package:banking/models/user_model.dart';
+import 'package:banking/providers/card_provider.dart';
 import 'package:banking/shared/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TransactionsProvider with ChangeNotifier {
   final List<TransactionModel> transactions = [];
@@ -11,6 +14,7 @@ class TransactionsProvider with ChangeNotifier {
   final _instance = FirebaseFirestore.instance;
 
   void createTransaction({
+    required BuildContext context,
     required double amount,
     required String receiverUId,
   }) {
@@ -36,6 +40,26 @@ class TransactionsProvider with ChangeNotifier {
         .set(transaction.toMap())
         .then((_) {})
         .catchError((_) {});
+    Provider.of<CardProvider>(
+      context,
+      listen: false,
+    ).cardModel!.balance -= amount;
+    CardModel? card;
+    _instance
+        .collection('users')
+        .doc(receiverUId)
+        .collection('card')
+        .doc(receiverUId)
+        .get()
+        .then((value) => card = CardModel.fromJson(value.data()!))
+        .catchError((_) {});
+    card!.balance += amount;
+    _instance
+        .collection('users')
+        .doc(receiverUId)
+        .collection('card')
+        .doc(receiverUId)
+        .set(card!.toMap());
   }
 
   Future<void> getTransactionsModels() async {
@@ -62,13 +86,21 @@ class TransactionsProvider with ChangeNotifier {
     }
   }
 
-// bool transferTo(double amount, CardModel recipient) {
-//     if (balance >= amount) {
-//       balance -= amount;
-//       recipient.balance += amount;
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
+  Future<String?> getUIdByCardNumber(String cardNumber) async {
+    String? id;
+    final snapShot = await _instance.collection('users').get();
+    final docs = snapShot.docs;
+    for (int i = 0; i < docs.length; i++) {
+      final cardSnapShot = await _instance
+          .collection('users')
+          .doc(docs[i].id)
+          .collection('card')
+          .doc(docs[i].id)
+          .get();
+      if (CardModel.fromJson(cardSnapShot.data()!).cardNumber == cardNumber) {
+        id = docs[i].id;
+      }
+    }
+    return id;
+  }
 }

@@ -12,6 +12,7 @@ import 'package:banking/screens/login_screen.dart';
 import 'package:banking/screens/register_screen.dart';
 import 'package:banking/screens/settings_screen.dart';
 import 'package:banking/screens/stats_screen.dart';
+import 'package:banking/screens/transfer_money_screen.dart';
 import 'package:banking/screens/wallet_screen.dart';
 import 'package:banking/shared/theme/theme_provider.dart';
 import 'package:banking/shared/theme/themes.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
           WalletScreen.routeName: (context) => const WalletScreen(),
           SettingsScreen.routeName: (context) => const SettingsScreen(),
           EditProfileScreen.routeName: (context) => const EditProfileScreen(),
+          TransferMoneyScreen.routeName: (context) => TransferMoneyScreen(),
         },
       ),
     );

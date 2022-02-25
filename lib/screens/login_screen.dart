@@ -9,9 +9,9 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
   static const routeName = '/login';
+  final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<LoginProvider>(context);
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Some text about why you should login to the application',
+                'Login now to manage your accounts, transfer money and more',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               const SizedBox(height: 20),

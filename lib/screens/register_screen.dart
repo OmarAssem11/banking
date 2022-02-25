@@ -9,11 +9,11 @@ import 'package:provider/provider.dart';
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
   static const routeName = '/register';
-  final emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final registerProvider = Provider.of<RegisterProvider>(context);
@@ -34,7 +34,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Some text about why you should register to the application',
+                'Register now to manage your accounts, transfer money and more',
                 style: theme.textTheme.subtitle1,
               ),
               const SizedBox(height: 20),
