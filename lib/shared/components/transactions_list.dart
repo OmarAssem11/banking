@@ -32,21 +32,22 @@ class TransactionsList extends StatelessWidget {
                 style: theme.textTheme.headline3,
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemBuilder: (_, index) => TransactionWidget(
-                  name: transactionsUsers[index].name,
-                  amount: transactions[index].amount,
-                  imageUrl: transactionsUsers[index].imageUrl,
-                  dateTime: transactions[index].dateTime.toDate(),
-                  isAdded:
-                      // ignore: avoid_bool_literals_in_conditional_expressions
-                      transactions[index].receiverUId == uId ? true : false,
+            if (transactionsUsers.isNotEmpty)
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) => TransactionWidget(
+                    name: transactionsUsers[index].name,
+                    amount: transactions[index].amount,
+                    imageUrl: transactionsUsers[index].imageUrl,
+                    dateTime: transactions[index].dateTime.toDate(),
+                    isAdded:
+                        // ignore: avoid_bool_literals_in_conditional_expressions
+                        transactions[index].receiverUId == uId ? true : false,
+                  ),
+                  itemCount: transactions.length,
                 ),
-                itemCount: transactions.length,
               ),
-            ),
           ],
         ),
       ),

@@ -3,96 +3,100 @@ import 'package:banking/models/transaction_model.dart';
 import 'package:banking/models/user_model.dart';
 import 'package:banking/providers/card_provider.dart';
 import 'package:banking/shared/constants.dart';
+import 'package:banking/shared/firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TransactionsProvider with ChangeNotifier {
-  final List<TransactionModel> transactions = [];
-  final List<UserModel> transactionsUsers = [];
+  List<TransactionModel> transactions = [];
+  List<UserModel> transactionsUsers = [];
 
-  final _instance = FirebaseFirestore.instance;
+  TransactionModel _createTransactionModel({
+    required double amount,
+    required String receiverUId,
+  }) =>
+      TransactionModel(
+        amount: amount,
+        senderUId: uId!,
+        receiverUId: receiverUId,
+        dateTime: Timestamp.now(),
+      );
+  void _storeTransactionData({
+    required double amount,
+    required String receiverUId,
+  }) {
+    final transaction = _createTransactionModel(
+      amount: amount,
+      receiverUId: receiverUId,
+    );
+    transactions.add(transaction);
+    FirebaseServices.getUserById(receiverUId)
+        .then((value) => transactionsUsers.add(value));
+    FirebaseServices.storeTransactionData(
+      uId: transaction.senderUId,
+      transaction: transaction,
+    );
+    FirebaseServices.storeTransactionData(
+      uId: transaction.receiverUId,
+      transaction: transaction,
+    );
+  }
+
+  void _updateCardsAfterTransaction({
+    required BuildContext context,
+    required double amount,
+    required String receiverUId,
+  }) {
+    final myCard = Provider.of<CardProvider>(
+      context,
+      listen: false,
+    ).cardModel!;
+    myCard.balance -= amount;
+    FirebaseServices.storeCardData(
+      cardModel: myCard,
+      uId: uId!,
+    );
+    CardModel? receiverCard;
+    FirebaseServices.getCardModel(receiverUId)
+        .then((value) => receiverCard = value);
+    receiverCard!.balance += amount;
+    FirebaseServices.storeCardData(
+      cardModel: receiverCard!,
+      uId: receiverUId,
+    );
+  }
 
   void createTransaction({
     required BuildContext context,
     required double amount,
     required String receiverUId,
   }) {
-    final transaction = TransactionModel(
+    _storeTransactionData(
       amount: amount,
-      senderUId: uId!,
       receiverUId: receiverUId,
-      dateTime: Timestamp.now(),
     );
-    _instance
-        .collection('users')
-        .doc(uId)
-        .collection('transactions')
-        .doc()
-        .set(transaction.toMap())
-        .then((_) {})
-        .catchError((_) {});
-    _instance
-        .collection('users')
-        .doc(receiverUId)
-        .collection('transactions')
-        .doc()
-        .set(transaction.toMap())
-        .then((_) {})
-        .catchError((_) {});
-    final myCard = Provider.of<CardProvider>(
-      context,
-      listen: false,
-    ).cardModel!;
-    myCard.balance -= amount;
-    _instance
-        .collection('users')
-        .doc(uId)
-        .collection('card')
-        .doc(uId)
-        .set(myCard.toMap())
-        .then((_) {})
-        .catchError((_) {});
-    CardModel? card;
-    _instance
-        .collection('users')
-        .doc(receiverUId)
-        .collection('card')
-        .doc(receiverUId)
-        .get()
-        .then((value) => card = CardModel.fromJson(value.data()!))
-        .catchError((_) {});
-    card!.balance += amount;
-    _instance
-        .collection('users')
-        .doc(receiverUId)
-        .collection('card')
-        .doc(receiverUId)
-        .set(card!.toMap())
-        .then((_) {})
-        .catchError((_) {});
-  }
-
-  Future<UserModel> _getUserById(String uID) async {
-    final snapshot = await _instance.collection('users').doc(uID).get();
-    return UserModel.fromJson(snapshot.data()!);
+    _updateCardsAfterTransaction(
+      context: context,
+      amount: amount,
+      receiverUId: receiverUId,
+    );
+    notifyListeners();
+    Provider.of<CardProvider>(context).updateCardModel();
   }
 
   Future<void> _getTransactionsModels() async {
-    final snapshot = await _instance
-        .collection('users')
-        .doc(uId)
-        .collection('transactions')
-        .get();
-    transactions.addAll(
-      snapshot.docs.map((e) => TransactionModel.fromJson(e.data())).toList(),
-    );
+    await FirebaseServices.getTransactionsModels(transactions);
   }
 
   Future<void> _getTransactionsUsers() async {
     UserModel user;
     for (int i = 0; i < transactions.length; i++) {
-      user = await _getUserById(transactions[i].receiverUId);
+      transactions[i].senderUId == uId
+          ? user =
+              await FirebaseServices.getUserById(transactions[i].receiverUId)
+          : user =
+              await FirebaseServices.getUserById(transactions[i].senderUId);
       transactionsUsers.add(user);
     }
   }
@@ -102,21 +106,6 @@ class TransactionsProvider with ChangeNotifier {
     await _getTransactionsUsers();
   }
 
-  Future<String?> getUIdByCardNumber(String cardNumber) async {
-    String? id;
-    final snapShot = await _instance.collection('users').get();
-    final docs = snapShot.docs;
-    for (int i = 0; i < docs.length; i++) {
-      final cardSnapShot = await _instance
-          .collection('users')
-          .doc(docs[i].id)
-          .collection('card')
-          .doc(docs[i].id)
-          .get();
-      if (CardModel.fromJson(cardSnapShot.data()!).cardNumber == cardNumber) {
-        id = docs[i].id;
-      }
-    }
-    return id;
-  }
+  Future<String?> getUIdByCardNumber(String cardNumber) =>
+      FirebaseServices.getUIdByCardNumber(cardNumber);
 }

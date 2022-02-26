@@ -2,7 +2,6 @@ import 'package:banking/firebase_options.dart';
 import 'package:banking/layouts/home_layout.dart';
 import 'package:banking/providers/bottom_nav_bar_provider.dart';
 import 'package:banking/providers/card_provider.dart';
-import 'package:banking/providers/profile_provider.dart';
 import 'package:banking/providers/register_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/providers/user_provider.dart';
@@ -52,9 +51,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TransactionsProvider>(
           create: (_) => TransactionsProvider(),
         ),
-        ChangeNotifierProvider<ProfileProvider>(
-          create: (_) => ProfileProvider(),
-        )
       ],
       builder: (BuildContext context, Widget? _) => MaterialApp(
         debugShowCheckedModeBanner: false,

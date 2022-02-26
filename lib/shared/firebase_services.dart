@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:banking/models/card_model.dart';
+import 'package:banking/models/transaction_model.dart';
 import 'package:banking/models/user_model.dart';
 import 'package:banking/shared/constants.dart';
 import 'package:banking/shared/firebase_error_handler.dart';
@@ -58,16 +59,20 @@ mixin FirebaseServices {
     }
   }
 
-  static void storeCardData(CardModel cardModel) => _firestore
-      .collection('users')
-      .doc(uId)
-      .collection('card')
-      .doc(uId)
-      .set(cardModel.toMap())
-      .then((_) {})
-      .catchError((_) {});
+  static void storeCardData({
+    required CardModel cardModel,
+    required String uId,
+  }) =>
+      _firestore
+          .collection('users')
+          .doc(uId)
+          .collection('card')
+          .doc(uId)
+          .set(cardModel.toMap())
+          .then((_) {})
+          .catchError((_) {});
 
-  static Future<CardModel?> getCardModel() async {
+  static Future<CardModel?> getCardModel(String uId) async {
     final snapshot = await _firestore
         .collection('users')
         .doc(uId)
@@ -106,5 +111,57 @@ mixin FirebaseServices {
       imageUrl: imageUrl ?? oldModel.imageUrl,
     );
     storeUserData(updatedModel);
+  }
+
+  static Future<String?> getUIdByCardNumber(String cardNumber) async {
+    String? id;
+    final snapShot = await _firestore.collection('users').get();
+    final docs = snapShot.docs;
+    for (int i = 0; i < docs.length; i++) {
+      final cardSnapShot = await _firestore
+          .collection('users')
+          .doc(docs[i].id)
+          .collection('card')
+          .doc(docs[i].id)
+          .get();
+      if (CardModel.fromJson(cardSnapShot.data()!).cardNumber == cardNumber) {
+        id = docs[i].id;
+      }
+    }
+    return id;
+  }
+
+  static Future<UserModel> getUserById(String uID) async {
+    final snapshot = await _firestore.collection('users').doc(uID).get();
+    return UserModel.fromJson(snapshot.data()!);
+  }
+
+  static void storeTransactionData({
+    required String uId,
+    required TransactionModel transaction,
+  }) {
+    _firestore
+        .collection('users')
+        .doc(uId)
+        .collection('transactions')
+        .doc()
+        .set(transaction.toMap())
+        .then((_) {})
+        .catchError((_) {});
+  }
+
+  static Future<void> getTransactionsModels(
+    List<TransactionModel> transactions,
+  ) async {
+    final querySnapShot = await _firestore
+        .collection('users')
+        .doc(uId)
+        .collection('transactions')
+        .get();
+    transactions.addAll(
+      querySnapShot.docs
+          .map((e) => TransactionModel.fromJson(e.data()))
+          .toList(),
+    );
   }
 }

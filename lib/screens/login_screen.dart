@@ -59,25 +59,27 @@ class LoginScreen extends StatelessWidget {
                       email: emailController.text,
                       password: passwordController.text,
                     )
-                        .then((value) {
-                      if (loginProvider.userModel != null) {}
+                        .then((_) {
+                      if (loginProvider.userModel != null) {
+                        Provider.of<CardProvider>(
+                          context,
+                          listen: false,
+                        ).getCardModel().then(
+                              (_) => Provider.of<TransactionsProvider>(
+                                context,
+                                listen: false,
+                              ).getTransactions().then(
+                                (_) {
+                                  Navigator.of(context)
+                                      .popUntil((route) => route.isFirst);
+                                  Navigator.of(context).pushReplacementNamed(
+                                    HomeLayout.routeName,
+                                  );
+                                },
+                              ),
+                            );
+                      }
                     });
-                    Provider.of<CardProvider>(
-                      context,
-                      listen: false,
-                    ).getCardModel().then(
-                          (_) => Provider.of<TransactionsProvider>(
-                            context,
-                            listen: false,
-                          ).getTransactions().then(
-                            (_) {
-                              Navigator.of(context)
-                                  .popUntil((route) => route.isFirst);
-                              Navigator.of(context)
-                                  .pushReplacementNamed(HomeLayout.routeName);
-                            },
-                          ),
-                        );
                   }
                 },
               ),

@@ -1,4 +1,5 @@
 import 'package:banking/models/card_model.dart';
+import 'package:banking/shared/constants.dart';
 import 'package:banking/shared/firebase_services.dart';
 import 'package:flutter/material.dart';
 
@@ -35,11 +36,16 @@ class CardProvider with ChangeNotifier {
       expiryDate: expiryDate,
       pinCode: pinCode,
     );
-    FirebaseServices.storeCardData(model);
+    FirebaseServices.storeCardData(
+      cardModel: model,
+      uId: uId!,
+    );
     cardModel = model;
     notifyListeners();
   }
 
   Future<void> getCardModel() async =>
-      cardModel = await FirebaseServices.getCardModel();
+      cardModel = await FirebaseServices.getCardModel(uId!);
+
+  void updateCardModel() => notifyListeners();
 }
