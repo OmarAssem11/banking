@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomTextFormField extends StatefulWidget {
+class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String text;
   final IconData prefix;
@@ -13,23 +13,14 @@ class CustomTextFormField extends StatefulWidget {
   });
 
   @override
-  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
-}
-
-class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  final focusNode = FocusNode();
-  @override
   Widget build(BuildContext context) {
-    focusNode.addListener(() => setState(() {}));
     final themeColor = Theme.of(context).colorScheme;
     return TextFormField(
       decoration: InputDecoration(
-        labelText: widget.text,
+        labelText: text,
         labelStyle: TextStyle(color: themeColor.secondary),
-        hintText: focusNode.hasFocus ? widget.text : '',
-        hintStyle: TextStyle(color: themeColor.secondary),
         prefixIcon: Icon(
-          widget.prefix,
+          prefix,
           color: themeColor.secondary,
         ),
         border: const OutlineInputBorder(
@@ -37,11 +28,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
       ),
       autocorrect: false,
-      keyboardType: widget.keyboardType,
-      controller: widget.controller,
+      keyboardType: keyboardType,
+      controller: controller,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return "${widget.text} can't be empty";
+          return "$text can't be empty";
         }
         return null;
       },

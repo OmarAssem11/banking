@@ -1,15 +1,11 @@
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/shared/components/transaction_widget.dart';
+import 'package:banking/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TransactionsList extends StatefulWidget {
+class TransactionsList extends StatelessWidget {
   const TransactionsList({Key? key}) : super(key: key);
-  @override
-  _TransactionsListState createState() => _TransactionsListState();
-}
-
-class _TransactionsListState extends State<TransactionsList> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -44,6 +40,9 @@ class _TransactionsListState extends State<TransactionsList> {
                   amount: transactions[index].amount,
                   imageUrl: transactionsUsers[index].imageUrl,
                   dateTime: transactions[index].dateTime.toDate(),
+                  isAdded:
+                      // ignore: avoid_bool_literals_in_conditional_expressions
+                      transactions[index].receiverUId == uId ? true : false,
                 ),
                 itemCount: transactions.length,
               ),

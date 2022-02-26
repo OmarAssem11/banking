@@ -1,5 +1,4 @@
-import 'package:banking/providers/login_provider.dart';
-import 'package:banking/providers/profile_provider.dart';
+import 'package:banking/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,15 +21,10 @@ class ChangeImageWidget extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: () => Provider.of<ProfileProvider>(
+        onTap: () => Provider.of<UserProvider>(
           context,
           listen: false,
-        ).changeProfileImage(
-          oldModel: Provider.of<LoginProvider>(
-            context,
-            listen: false,
-          ).userModel,
-        ),
+        ).changeProfileImage(),
         child: Row(
           children: [
             const Icon(

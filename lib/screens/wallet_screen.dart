@@ -8,6 +8,7 @@ class WalletScreen extends StatelessWidget {
   static const routeName = '/wallet';
   @override
   Widget build(BuildContext context) {
+    final card = Provider.of<CardProvider>(context).cardModel;
     final theme = Theme.of(context);
     return Scaffold(
       body: Column(
@@ -34,7 +35,7 @@ class WalletScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '\$ ${Provider.of<CardProvider>(context).cardModel!.balance}',
+                  card != null ? '\$ ${card.balance}' : '0',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

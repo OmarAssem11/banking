@@ -5,13 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:provider/provider.dart';
 
-class CreditCard extends StatefulWidget {
-  const CreditCard({Key? key}) : super(key: key);
-  @override
-  _CreditCardState createState() => _CreditCardState();
-}
-
-class _CreditCardState extends State<CreditCard> {
+class CreditCard extends StatelessWidget {
   final grey = Colors.grey;
   final _formKey = GlobalKey<FormState>();
   final cardHolderNameController = TextEditingController();
@@ -23,7 +17,7 @@ class _CreditCardState extends State<CreditCard> {
     final card = Provider.of<CardProvider>(context).cardModel;
     return card == null
         ? InkWell(
-            onTap: _addCard,
+            onTap: () => _addCard(context),
             child: Container(
               height: 200,
               width: double.infinity,
@@ -72,7 +66,7 @@ class _CreditCardState extends State<CreditCard> {
           );
   }
 
-  void _addCard() {
+  void _addCard(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (_) => Form(
@@ -119,35 +113,33 @@ class _CreditCardState extends State<CreditCard> {
                 text: 'submit',
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    setState(() {
-                      Provider.of<CardProvider>(
-                        context,
-                        listen: false,
-                      ).createCard(
-                        context: context,
-                        cardHolderName: cardHolderNameController.text,
-                        cardNumber: cardNumberController.text,
-                        cvvCode: cvvCodeController.text,
-                        expiryDate: expiryDateController.text,
-                      );
-                      Navigator.of(context).pop();
-                      final snackBar = SnackBar(
-                        backgroundColor: const Color.fromARGB(255, 2, 117, 5),
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Card has been added successfully!'),
-                            Icon(
-                              Icons.done,
-                              color: Colors.white,
-                              size: 26,
-                            )
-                          ],
-                        ),
-                        duration: const Duration(seconds: 2),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    });
+                    Provider.of<CardProvider>(
+                      context,
+                      listen: false,
+                    ).createCard(
+                      cardHolderName: cardHolderNameController.text,
+                      cardNumber: cardNumberController.text,
+                      cvvCode: cvvCodeController.text,
+                      expiryDate: expiryDateController.text,
+                      pinCode: '',
+                    );
+                    Navigator.of(context).pop();
+                    final snackBar = SnackBar(
+                      backgroundColor: const Color.fromARGB(255, 2, 117, 5),
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('Card has been added successfully!'),
+                          Icon(
+                            Icons.done,
+                            color: Colors.white,
+                            size: 26,
+                          )
+                        ],
+                      ),
+                      duration: const Duration(seconds: 2),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
               ),

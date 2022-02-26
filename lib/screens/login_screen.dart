@@ -1,4 +1,7 @@
-import 'package:banking/providers/login_provider.dart';
+import 'package:banking/layouts/home_layout.dart';
+import 'package:banking/providers/card_provider.dart';
+import 'package:banking/providers/transactions_provider.dart';
+import 'package:banking/providers/user_provider.dart';
 import 'package:banking/screens/register_screen.dart';
 import 'package:banking/shared/components/custom_button.dart';
 import 'package:banking/shared/components/custom_text_form_field.dart';
@@ -14,7 +17,7 @@ class LoginScreen extends StatelessWidget {
   final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final loginProvider = Provider.of<LoginProvider>(context);
+    final loginProvider = Provider.of<UserProvider>(context);
     final themeColor = Theme.of(context).colorScheme;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -49,13 +52,32 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                 text: 'login',
-                onPressed: () async {
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    await loginProvider.login(
-                      context: context,
+                    loginProvider
+                        .login(
                       email: emailController.text,
                       password: passwordController.text,
-                    );
+                    )
+                        .then((value) {
+                      if (loginProvider.userModel != null) {}
+                    });
+                    Provider.of<CardProvider>(
+                      context,
+                      listen: false,
+                    ).getCardModel().then(
+                          (_) => Provider.of<TransactionsProvider>(
+                            context,
+                            listen: false,
+                          ).getTransactions().then(
+                            (_) {
+                              Navigator.of(context)
+                                  .popUntil((route) => route.isFirst);
+                              Navigator.of(context)
+                                  .pushReplacementNamed(HomeLayout.routeName);
+                            },
+                          ),
+                        );
                   }
                 },
               ),

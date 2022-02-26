@@ -1,4 +1,6 @@
+import 'package:banking/layouts/home_layout.dart';
 import 'package:banking/providers/register_provider.dart';
+import 'package:banking/providers/user_provider.dart';
 import 'package:banking/screens/login_screen.dart';
 import 'package:banking/shared/components/custom_button.dart';
 import 'package:banking/shared/components/custom_text_form_field.dart';
@@ -16,7 +18,10 @@ class RegisterScreen extends StatelessWidget {
   final phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final registerProvider = Provider.of<RegisterProvider>(context);
+    final registerProvider = Provider.of<RegisterProvider>(
+      context,
+      listen: false,
+    );
     final theme = Theme.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -65,15 +70,27 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 20),
               CustomButton(
                 text: 'register',
-                onPressed: () async {
+                onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    registerProvider.register(
-                      context: context,
+                    registerProvider
+                        .register(
                       name: nameController.text,
                       email: emailController.text,
                       password: passwordController.text,
                       phone: phoneController.text,
-                    );
+                    )
+                        .then((value) {
+                      if (value != null) {
+                        Provider.of<UserProvider>(
+                          context,
+                          listen: false,
+                        ).userModel = value;
+                        Navigator.of(context)
+                            .popUntil((route) => route.isFirst);
+                        Navigator.of(context)
+                            .pushReplacementNamed(HomeLayout.routeName);
+                      }
+                    });
                   }
                 },
               ),

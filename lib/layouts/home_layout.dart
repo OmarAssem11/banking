@@ -1,5 +1,5 @@
 import 'package:banking/providers/bottom_nav_bar_provider.dart';
-import 'package:banking/providers/login_provider.dart';
+import 'package:banking/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +25,7 @@ class HomeLayout extends StatelessWidget {
         actions: [
           CircleAvatar(
             backgroundImage: NetworkImage(
-              Provider.of<LoginProvider>(context).userModel.imageUrl,
+              Provider.of<UserProvider>(context).userModel!.imageUrl,
             ),
             radius: 22,
           ),

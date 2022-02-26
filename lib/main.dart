@@ -2,10 +2,10 @@ import 'package:banking/firebase_options.dart';
 import 'package:banking/layouts/home_layout.dart';
 import 'package:banking/providers/bottom_nav_bar_provider.dart';
 import 'package:banking/providers/card_provider.dart';
-import 'package:banking/providers/login_provider.dart';
 import 'package:banking/providers/profile_provider.dart';
 import 'package:banking/providers/register_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
+import 'package:banking/providers/user_provider.dart';
 import 'package:banking/screens/edit_profile_screen.dart';
 import 'package:banking/screens/home_screen.dart';
 import 'package:banking/screens/login_screen.dart';
@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<RegisterProvider>(
           create: (_) => RegisterProvider(),
         ),
-        ChangeNotifierProvider<LoginProvider>(
-          create: (_) => LoginProvider(),
+        ChangeNotifierProvider<UserProvider>(
+          create: (_) => UserProvider(),
         ),
         ChangeNotifierProvider<CardProvider>(
           create: (_) => CardProvider(),

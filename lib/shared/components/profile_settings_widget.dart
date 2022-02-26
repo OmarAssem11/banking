@@ -1,5 +1,4 @@
-import 'package:banking/models/user_model.dart';
-import 'package:banking/providers/profile_provider.dart';
+import 'package:banking/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -10,69 +9,45 @@ class ProfileSettingsWidget extends StatefulWidget {
   late final TextInputType keyboardType;
   late final TextEditingController controller;
   late final VoidCallback onPressed;
-  ProfileSettingsWidget.editName({
-    required BuildContext context,
-    required UserModel userModel,
-  }) {
+  ProfileSettingsWidget.editName(BuildContext context) {
     text = 'name';
     icon = Icons.account_circle_outlined;
     keyboardType = TextInputType.name;
     controller = TextEditingController();
-    onPressed = () => Provider.of<ProfileProvider>(
+    onPressed = () => Provider.of<UserProvider>(
           context,
           listen: false,
-        ).changeName(
-          oldModel: userModel,
-          newName: controller.text,
-        );
+        ).changeName(controller.text);
   }
-  ProfileSettingsWidget.editEmail({
-    required BuildContext context,
-    required UserModel userModel,
-  }) {
+  ProfileSettingsWidget.editEmail(BuildContext context) {
     text = 'email address';
     icon = Icons.email_outlined;
     keyboardType = TextInputType.emailAddress;
     controller = TextEditingController();
-    onPressed = () => Provider.of<ProfileProvider>(
+    onPressed = () => Provider.of<UserProvider>(
           context,
           listen: false,
-        ).changeEmail(
-          oldModel: userModel,
-          newEmail: controller.text,
-        );
+        ).changeEmail(controller.text);
   }
-  ProfileSettingsWidget.editPassword({
-    required BuildContext context,
-    required UserModel userModel,
-  }) {
+  ProfileSettingsWidget.editPassword(BuildContext context) {
     text = 'password';
     icon = Icons.lock_outline;
     keyboardType = TextInputType.visiblePassword;
     controller = TextEditingController();
-    onPressed = () => Provider.of<ProfileProvider>(
+    onPressed = () => Provider.of<UserProvider>(
           context,
           listen: false,
-        ).changePassword(
-          oldModel: userModel,
-          newPassword: controller.text,
-        );
+        ).changePassword(controller.text);
   }
-  ProfileSettingsWidget.editPhone({
-    required BuildContext context,
-    required UserModel userModel,
-  }) {
+  ProfileSettingsWidget.editPhone(BuildContext context) {
     text = 'phone number';
     icon = Icons.phone_outlined;
     keyboardType = TextInputType.phone;
     controller = TextEditingController();
-    onPressed = () => Provider.of<ProfileProvider>(
+    onPressed = () => Provider.of<UserProvider>(
           context,
           listen: false,
-        ).changePhone(
-          oldModel: userModel,
-          newPhone: controller.text,
-        );
+        ).changePhone(controller.text);
   }
   @override
   State<ProfileSettingsWidget> createState() => _ProfileSettingsWidgetState();

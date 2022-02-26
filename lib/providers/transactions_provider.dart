@@ -20,7 +20,7 @@ class TransactionsProvider with ChangeNotifier {
   }) {
     final transaction = TransactionModel(
       amount: amount,
-      senderUId: uId,
+      senderUId: uId!,
       receiverUId: receiverUId,
       dateTime: Timestamp.now(),
     );
@@ -40,10 +40,19 @@ class TransactionsProvider with ChangeNotifier {
         .set(transaction.toMap())
         .then((_) {})
         .catchError((_) {});
-    Provider.of<CardProvider>(
+    final myCard = Provider.of<CardProvider>(
       context,
       listen: false,
-    ).cardModel!.balance -= amount;
+    ).cardModel!;
+    myCard.balance -= amount;
+    _instance
+        .collection('users')
+        .doc(uId)
+        .collection('card')
+        .doc(uId)
+        .set(myCard.toMap())
+        .then((_) {})
+        .catchError((_) {});
     CardModel? card;
     _instance
         .collection('users')
@@ -59,10 +68,17 @@ class TransactionsProvider with ChangeNotifier {
         .doc(receiverUId)
         .collection('card')
         .doc(receiverUId)
-        .set(card!.toMap());
+        .set(card!.toMap())
+        .then((_) {})
+        .catchError((_) {});
   }
 
-  Future<void> getTransactionsModels() async {
+  Future<UserModel> _getUserById(String uID) async {
+    final snapshot = await _instance.collection('users').doc(uID).get();
+    return UserModel.fromJson(snapshot.data()!);
+  }
+
+  Future<void> _getTransactionsModels() async {
     final snapshot = await _instance
         .collection('users')
         .doc(uId)
@@ -73,17 +89,17 @@ class TransactionsProvider with ChangeNotifier {
     );
   }
 
-  Future<UserModel> _getUserById(String uID) async {
-    final snapshot = await _instance.collection('users').doc(uID).get();
-    return UserModel.fromJson(snapshot.data()!);
-  }
-
-  Future<void> getTransactionsUsers() async {
+  Future<void> _getTransactionsUsers() async {
     UserModel user;
     for (int i = 0; i < transactions.length; i++) {
       user = await _getUserById(transactions[i].receiverUId);
       transactionsUsers.add(user);
     }
+  }
+
+  Future<void> getTransactions() async {
+    await _getTransactionsModels();
+    await _getTransactionsUsers();
   }
 
   Future<String?> getUIdByCardNumber(String cardNumber) async {

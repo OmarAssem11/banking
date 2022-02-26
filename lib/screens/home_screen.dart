@@ -10,9 +10,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           CreditCard(),
-          TransactionsList(),
+          const TransactionsList(),
         ],
       ),
     );

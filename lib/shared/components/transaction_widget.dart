@@ -6,11 +6,13 @@ class TransactionWidget extends StatelessWidget {
   final double amount;
   final String imageUrl;
   final DateTime dateTime;
+  final bool isAdded;
   const TransactionWidget({
     required this.name,
     required this.amount,
     required this.imageUrl,
     required this.dateTime,
+    required this.isAdded,
   });
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class TransactionWidget extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            '+\$$amount',
+            isAdded ? '+\$$amount' : '-\$$amount',
             style: theme.textTheme.headline5,
           ),
         ],
