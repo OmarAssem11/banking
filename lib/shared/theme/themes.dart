@@ -24,7 +24,7 @@ final lightTheme = ThemeData(
       color: Colors.blueGrey,
     ),
     subtitle2: TextStyle(
-      fontSize: 10,
+      fontSize: 12,
       color: Colors.blueGrey,
     ),
     headline1: TextStyle(
@@ -58,6 +58,11 @@ final lightTheme = ThemeData(
     labelMedium: TextStyle(
       color: Colors.grey,
       fontSize: 14,
+    ),
+    bodyText1: TextStyle(
+      fontSize: 15,
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
     ),
   ),
   appBarTheme: const AppBarTheme(
@@ -124,7 +129,7 @@ final darkTheme = ThemeData(
       color: Colors.blueGrey,
     ),
     subtitle2: TextStyle(
-      fontSize: 10,
+      fontSize: 12,
       color: Colors.blueGrey,
     ),
     headline1: TextStyle(
@@ -158,6 +163,11 @@ final darkTheme = ThemeData(
     labelMedium: TextStyle(
       color: Colors.grey,
       fontSize: 14,
+    ),
+    bodyText1: TextStyle(
+      fontSize: 15,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
     ),
   ),
   appBarTheme: const AppBarTheme(

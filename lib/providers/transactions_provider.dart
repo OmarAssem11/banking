@@ -22,6 +22,7 @@ class TransactionsProvider with ChangeNotifier {
         receiverUId: receiverUId,
         dateTime: Timestamp.now(),
       );
+
   void _storeTransactionData({
     required double amount,
     required String receiverUId,
@@ -57,14 +58,13 @@ class TransactionsProvider with ChangeNotifier {
       cardModel: myCard,
       uId: uId!,
     );
-    CardModel? receiverCard;
-    FirebaseServices.getCardModel(receiverUId)
-        .then((value) => receiverCard = value);
-    receiverCard!.balance += amount;
-    FirebaseServices.storeCardData(
-      cardModel: receiverCard!,
-      uId: receiverUId,
-    );
+    FirebaseServices.getCardModel(receiverUId).then((value) {
+      value!.balance += amount;
+      FirebaseServices.storeCardData(
+        cardModel: value,
+        uId: receiverUId,
+      );
+    });
   }
 
   void createTransaction({
@@ -82,7 +82,10 @@ class TransactionsProvider with ChangeNotifier {
       receiverUId: receiverUId,
     );
     notifyListeners();
-    Provider.of<CardProvider>(context).updateCardModel();
+    Provider.of<CardProvider>(
+      context,
+      listen: false,
+    ).updateCardModel();
   }
 
   Future<void> _getTransactionsModels() async {
