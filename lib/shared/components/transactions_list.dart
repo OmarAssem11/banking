@@ -14,6 +14,7 @@ class TransactionsList extends StatelessWidget {
     final transactionsUsers = provider.transactionsUsers;
     return Expanded(
       child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(40)),
           color: theme.colorScheme.tertiary,
@@ -23,7 +24,7 @@ class TransactionsList extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                left: 32,
+                left: 22,
                 top: 16,
                 bottom: 8,
               ),

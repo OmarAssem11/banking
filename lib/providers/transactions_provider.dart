@@ -1,4 +1,3 @@
-import 'package:banking/models/card_model.dart';
 import 'package:banking/models/transaction_model.dart';
 import 'package:banking/models/user_model.dart';
 import 'package:banking/providers/card_provider.dart';

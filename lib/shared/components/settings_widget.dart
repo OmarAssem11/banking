@@ -28,7 +28,7 @@ class SettingsWidget extends StatelessWidget {
               backgroundColor: color,
               child: Icon(
                 icon,
-                size: 28,
+                size: 30,
                 color: Colors.white,
               ),
             ),

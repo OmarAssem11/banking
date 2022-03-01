@@ -12,9 +12,12 @@ class CreditCard extends StatelessWidget {
   final cardNumberController = TextEditingController();
   final expiryDateController = TextEditingController();
   final cvvCodeController = TextEditingController();
+  final pinCodeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final card = Provider.of<CardProvider>(context).cardModel;
+    final cardNumber = card?.cardNumber
+        .replaceAllMapped(RegExp('.{4}'), (match) => '${match.group(0)} ');
     return card == null
         ? InkWell(
             onTap: () => _addCard(context),
@@ -23,7 +26,7 @@ class CreditCard extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.symmetric(
                 vertical: 16,
-                horizontal: 32,
+                horizontal: 25,
               ),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -54,7 +57,7 @@ class CreditCard extends StatelessWidget {
           )
         : CreditCardWidget(
             cardHolderName: card.cardHolderName,
-            cardNumber: card.cardNumber,
+            cardNumber: cardNumber!,
             expiryDate: card.expiryDate,
             cvvCode: card.cvvCode,
             showBackView: false,
@@ -80,7 +83,17 @@ class CreditCard extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                'Card information',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(height: 6),
               CustomTextFormField(
                 controller: cardHolderNameController,
                 text: 'Card holder name',
@@ -95,20 +108,44 @@ class CreditCard extends StatelessWidget {
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 6),
-              CustomTextFormField(
-                controller: expiryDateController,
-                text: 'Expiry date',
-                prefix: Icons.date_range,
-                keyboardType: TextInputType.datetime,
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextFormField(
+                      controller: expiryDateController,
+                      text: 'Expiry date',
+                      prefix: Icons.date_range,
+                      keyboardType: TextInputType.datetime,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: CustomTextFormField(
+                      controller: cvvCodeController,
+                      text: 'CVV code',
+                      prefix: Icons.confirmation_number,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Security',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
               const SizedBox(height: 6),
               CustomTextFormField(
-                controller: cvvCodeController,
-                text: 'CVV code',
-                prefix: Icons.confirmation_number,
+                controller: pinCodeController,
+                text: 'Pin code',
+                prefix: Icons.pin_outlined,
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 10),
               CustomButton(
                 text: 'submit',
                 onPressed: () {
@@ -121,7 +158,7 @@ class CreditCard extends StatelessWidget {
                       cardNumber: cardNumberController.text,
                       cvvCode: cvvCodeController.text,
                       expiryDate: expiryDateController.text,
-                      pinCode: '',
+                      pinCode: pinCodeController.text,
                     );
                     Navigator.of(context).pop();
                     final snackBar = SnackBar(

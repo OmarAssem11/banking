@@ -82,9 +82,7 @@ final lightTheme = ThemeData(
   ),
   scaffoldBackgroundColor: Colors.white,
   progressIndicatorTheme: const ProgressIndicatorThemeData(
-    linearMinHeight: 10,
     color: Color(0xff150050),
-    linearTrackColor: Colors.white,
   ),
   bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: Colors.white,
@@ -184,9 +182,7 @@ final darkTheme = ThemeData(
   ),
   scaffoldBackgroundColor: Colors.black,
   progressIndicatorTheme: const ProgressIndicatorThemeData(
-    linearMinHeight: 10,
     color: Color.fromARGB(255, 170, 23, 12),
-    linearTrackColor: Color.fromARGB(255, 33, 10, 73),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: Color.fromARGB(255, 7, 1, 27),

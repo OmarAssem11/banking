@@ -4,6 +4,7 @@ import 'package:banking/providers/card_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/shared/components/custom_button.dart';
 import 'package:banking/shared/components/custom_text_form_field.dart';
+import 'package:banking/shared/firebase_error_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -54,72 +55,55 @@ class TransferMoneyScreen extends StatelessWidget {
               CustomButton(
                 text: 'Transfer',
                 onPressed: () async {
-                  final pin = Provider.of<CardProvider>(
+                  final card = Provider.of<CardProvider>(
                     context,
                     listen: false,
-                  ).cardModel!.pinCode;
+                  ).cardModel;
+                  final pin = card!.pinCode;
                   final receiverUId = await provider
                       .getUIdByCardNumber(accountNumberController.text);
-                  if (_formKey.currentState!.validate() &&
-                      receiverUId != null &&
-                      pinCodeController.text == pin) {
-                    final snackBar = SnackBar(
-                      backgroundColor: const Color.fromARGB(255, 2, 117, 5),
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Transfer done successfully!'),
-                          Icon(
-                            Icons.done,
-                            color: Colors.white,
-                            size: 26,
-                          ),
-                        ],
-                      ),
-                      duration: const Duration(seconds: 2),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    provider.createTransaction(
-                      context: context,
-                      amount: double.parse(amountController.text),
-                      receiverUId: receiverUId,
-                    );
-                  } else if (_formKey.currentState!.validate() &&
-                      receiverUId == null) {
-                    final snackBar = SnackBar(
-                      backgroundColor: const Color.fromARGB(255, 192, 0, 0),
-                      content: Row(
-                        children: const [
-                          Icon(
-                            Icons.warning_amber_rounded,
-                            color: Colors.white,
-                            size: 22,
-                          ),
-                          SizedBox(width: 8),
-                          Text('Invalid account number'),
-                        ],
-                      ),
-                      duration: const Duration(seconds: 2),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else if (_formKey.currentState!.validate() &&
-                      pinCodeController.text != pin) {
-                    final snackBar = SnackBar(
-                      backgroundColor: const Color.fromARGB(255, 192, 0, 0),
-                      content: Row(
-                        children: const [
-                          Icon(
-                            Icons.warning_amber_rounded,
-                            color: Colors.white,
-                            size: 22,
-                          ),
-                          SizedBox(width: 8),
-                          Text('Wrong pin code'),
-                        ],
-                      ),
-                      duration: const Duration(seconds: 2),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  if (_formKey.currentState!.validate()) {
+                    if (receiverUId != null &&
+                        pinCodeController.text == pin &&
+                        double.parse(amountController.text) <= card.balance) {
+                      final snackBar = SnackBar(
+                        backgroundColor: const Color.fromARGB(255, 2, 117, 5),
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text('Transfer done successfully!'),
+                            Icon(
+                              Icons.done,
+                              color: Colors.white,
+                              size: 26,
+                            ),
+                          ],
+                        ),
+                        duration: const Duration(seconds: 2),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      provider.createTransaction(
+                        context: context,
+                        amount: double.parse(amountController.text),
+                        receiverUId: receiverUId,
+                      );
+                    } else if (receiverUId == null) {
+                      ErrorHandler.invalidInput(
+                        context: context,
+                        errorMessage: 'Invalid account number',
+                      );
+                    } else if (double.parse(amountController.text) >
+                        card.balance) {
+                      ErrorHandler.invalidInput(
+                        context: context,
+                        errorMessage: 'Insufficient balance',
+                      );
+                    } else if (pinCodeController.text != pin) {
+                      ErrorHandler.invalidInput(
+                        context: context,
+                        errorMessage: 'Wrong pin code',
+                      );
+                    }
                   }
                 },
               ),

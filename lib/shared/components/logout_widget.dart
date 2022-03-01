@@ -1,4 +1,3 @@
-import 'package:banking/providers/bottom_nav_bar_provider.dart';
 import 'package:banking/providers/card_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/screens/login_screen.dart';
@@ -77,10 +76,6 @@ class LogoutWidget extends StatelessWidget {
     );
     navigator.popUntil((route) => route.isFirst);
     navigator.pushReplacementNamed(LoginScreen.routeName);
-    Provider.of<BottomNavBarProvider>(
-      context,
-      listen: false,
-    ).selectedScreenIndex = 0;
     uId = null;
     Provider.of<CardProvider>(
       context,

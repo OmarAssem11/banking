@@ -1,8 +1,8 @@
 import 'package:banking/firebase_options.dart';
 import 'package:banking/layouts/home_layout.dart';
-import 'package:banking/providers/bottom_nav_bar_provider.dart';
 import 'package:banking/providers/card_provider.dart';
 import 'package:banking/providers/register_provider.dart';
+import 'package:banking/providers/theme_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/providers/user_provider.dart';
 import 'package:banking/screens/edit_profile_screen.dart';
@@ -10,11 +10,9 @@ import 'package:banking/screens/home_screen.dart';
 import 'package:banking/screens/login_screen.dart';
 import 'package:banking/screens/register_screen.dart';
 import 'package:banking/screens/settings_screen.dart';
-import 'package:banking/screens/stats_screen.dart';
+import 'package:banking/screens/transactions_screen.dart';
 import 'package:banking/screens/transfer_money_screen.dart';
-import 'package:banking/screens/wallet_screen.dart';
-import 'package:banking/shared/theme/theme_provider.dart';
-import 'package:banking/shared/theme/themes.dart';
+import 'package:banking/shared/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,9 +43,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CardProvider>(
           create: (_) => CardProvider(),
         ),
-        ChangeNotifierProvider<BottomNavBarProvider>(
-          create: (_) => BottomNavBarProvider(),
-        ),
         ChangeNotifierProvider<TransactionsProvider>(
           create: (_) => TransactionsProvider(),
         ),
@@ -63,8 +58,7 @@ class MyApp extends StatelessWidget {
           LoginScreen.routeName: (context) => LoginScreen(),
           RegisterScreen.routeName: (context) => RegisterScreen(),
           HomeScreen.routeName: (context) => const HomeScreen(),
-          StatsScreen.routeName: (context) => const StatsScreen(),
-          WalletScreen.routeName: (context) => const WalletScreen(),
+          TransactionsScreen.routeName: (context) => const TransactionsScreen(),
           SettingsScreen.routeName: (context) => const SettingsScreen(),
           EditProfileScreen.routeName: (context) => const EditProfileScreen(),
           TransferMoneyScreen.routeName: (context) => TransferMoneyScreen(),

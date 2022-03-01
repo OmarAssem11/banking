@@ -17,10 +17,10 @@ class TransactionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final dateFormat = DateFormat('dd-MMMM  hh:mm');
+    final dateFormat = DateFormat('dd-MMMM  HH:MM');
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 32,
+        horizontal: 22,
         vertical: 8,
       ),
       child: Row(

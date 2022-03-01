@@ -1,8 +1,8 @@
+import 'package:banking/providers/theme_provider.dart';
 import 'package:banking/screens/edit_profile_screen.dart';
 import 'package:banking/shared/components/logout_widget.dart';
 import 'package:banking/shared/components/setting_switch.dart';
 import 'package:banking/shared/components/settings_widget.dart';
-import 'package:banking/shared/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +17,8 @@ class SettingsScreen extends StatelessWidget {
         children: [
           const SettingsWidget(
             text: 'Edit profile',
-            color: Colors.purple,
-            icon: Icons.account_circle,
+            color: Colors.orange,
+            icon: Icons.person,
             routeName: EditProfileScreen.routeName,
           ),
           SettingSwitch(
@@ -27,13 +27,6 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.dark_mode,
             value: provider.isDark,
             onChange: (_) => provider.switchTheme(),
-          ),
-          SettingSwitch(
-            text: 'Notifications',
-            color: Colors.amber,
-            icon: Icons.notifications,
-            value: true,
-            onChange: (_) {},
           ),
           const LogoutWidget(),
         ],

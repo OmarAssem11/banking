@@ -26,7 +26,7 @@ mixin FirebaseServices {
         uId = userCredential.user!.uid;
       }
     } on FirebaseAuthException catch (error) {
-      FirebaseErrorHandler.registerError(error);
+      ErrorHandler.registerError(error);
     }
   }
 
@@ -55,7 +55,7 @@ mixin FirebaseServices {
         uId = userCredential.user!.uid;
       }
     } on FirebaseAuthException catch (error) {
-      FirebaseErrorHandler.registerError(error);
+      ErrorHandler.registerError(error);
     }
   }
 
