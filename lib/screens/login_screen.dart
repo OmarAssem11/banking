@@ -19,6 +19,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<UserProvider>(context);
     final themeColor = Theme.of(context).colorScheme;
+    final navigator = Navigator.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
@@ -70,9 +71,8 @@ class LoginScreen extends StatelessWidget {
                                 listen: false,
                               ).getTransactions().then(
                                 (_) {
-                                  Navigator.of(context)
-                                      .popUntil((route) => route.isFirst);
-                                  Navigator.of(context).pushReplacementNamed(
+                                  navigator.popUntil((route) => route.isFirst);
+                                  navigator.pushReplacementNamed(
                                     HomeLayout.routeName,
                                   );
                                 },
@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.of(context)
+                    onPressed: () => navigator
                         .pushReplacementNamed(RegisterScreen.routeName),
                     child: Text(
                       'REGISTER',

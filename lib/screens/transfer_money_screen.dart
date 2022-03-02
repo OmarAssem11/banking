@@ -1,9 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:banking/providers/card_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/shared/components/custom_button.dart';
 import 'package:banking/shared/components/custom_text_form_field.dart';
+import 'package:banking/shared/components/show_snack_bar.dart';
 import 'package:banking/shared/error_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -66,22 +65,10 @@ class TransferMoneyScreen extends StatelessWidget {
                     if (receiverUId != null &&
                         pinCodeController.text == pin &&
                         double.parse(amountController.text) <= card.balance) {
-                      final snackBar = SnackBar(
-                        backgroundColor: const Color.fromARGB(255, 2, 117, 5),
-                        content: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text('Transfer done successfully!'),
-                            Icon(
-                              Icons.done,
-                              color: Colors.white,
-                              size: 26,
-                            ),
-                          ],
-                        ),
-                        duration: const Duration(seconds: 2),
+                      showSnackBar(
+                        context: context,
+                        message: 'Transfer done successfully!',
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       provider.createTransaction(
                         context: context,
                         amount: double.parse(amountController.text),

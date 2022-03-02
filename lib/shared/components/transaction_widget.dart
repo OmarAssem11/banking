@@ -16,7 +16,7 @@ class TransactionWidget extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
     final dateFormat = DateFormat('dd-MMMM  HH:MM');
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -39,19 +39,19 @@ class TransactionWidget extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: theme.textTheme.bodyText1,
+                style: textTheme.bodyText1,
               ),
               const SizedBox(height: 3),
               Text(
                 dateFormat.format(dateTime),
-                style: theme.textTheme.subtitle2,
+                style: textTheme.subtitle2,
               ),
             ],
           ),
           const Spacer(),
           Text(
             isAdded ? '+\$$amount' : '-\$$amount',
-            style: theme.textTheme.bodyText1,
+            style: textTheme.bodyText1,
           ),
         ],
       ),

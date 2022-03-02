@@ -26,14 +26,14 @@ class _HomeLayoutState extends State<HomeLayout> {
   ];
   @override
   Widget build(BuildContext context) {
-    final themeColor = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final themeColor = theme.colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           screensTitles[selectedScreenIndex],
-          style: Theme.of(context).textTheme.headline3,
+          style: theme.textTheme.headline3,
         ),
-        backgroundColor: themeColor.onPrimary,
         shape: Border(
           bottom: BorderSide(
             color: themeColor.onPrimary,

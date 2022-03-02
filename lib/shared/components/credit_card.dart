@@ -1,6 +1,7 @@
 import 'package:banking/providers/card_provider.dart';
 import 'package:banking/shared/components/custom_button.dart';
 import 'package:banking/shared/components/custom_text_form_field.dart';
+import 'package:banking/shared/components/show_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:provider/provider.dart';
@@ -161,22 +162,10 @@ class CreditCard extends StatelessWidget {
                       pinCode: pinCodeController.text,
                     );
                     Navigator.of(context).pop();
-                    final snackBar = SnackBar(
-                      backgroundColor: const Color.fromARGB(255, 2, 117, 5),
-                      content: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('Card has been added successfully!'),
-                          Icon(
-                            Icons.done,
-                            color: Colors.white,
-                            size: 26,
-                          )
-                        ],
-                      ),
-                      duration: const Duration(seconds: 2),
+                    showSnackBar(
+                      context: context,
+                      message: 'Card has been added successfully!',
                     );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 },
               ),

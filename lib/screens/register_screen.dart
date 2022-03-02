@@ -23,6 +23,9 @@ class RegisterScreen extends StatelessWidget {
       listen: false,
     );
     final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorTheme = theme.colorScheme;
+    final navigator = Navigator.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
@@ -35,12 +38,12 @@ class RegisterScreen extends StatelessWidget {
             children: [
               Text(
                 'REGISTER',
-                style: theme.textTheme.headline4,
+                style: textTheme.headline4,
               ),
               const SizedBox(height: 8),
               Text(
                 'Register now to manage your accounts, transfer money and more',
-                style: theme.textTheme.subtitle1,
+                style: textTheme.subtitle1,
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
@@ -85,10 +88,8 @@ class RegisterScreen extends StatelessWidget {
                           context,
                           listen: false,
                         ).userModel = value;
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
-                        Navigator.of(context)
-                            .pushReplacementNamed(HomeLayout.routeName);
+                        navigator.popUntil((route) => route.isFirst);
+                        navigator.pushReplacementNamed(HomeLayout.routeName);
                       }
                     });
                   }
@@ -102,17 +103,17 @@ class RegisterScreen extends StatelessWidget {
                     'Already have an account?',
                     style: TextStyle(
                       fontSize: 16,
-                      color: theme.colorScheme.onTertiary,
+                      color: colorTheme.onTertiary,
                     ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushReplacementNamed(LoginScreen.routeName),
+                    onPressed: () =>
+                        navigator.pushReplacementNamed(LoginScreen.routeName),
                     child: Text(
                       'LOGIN',
                       style: TextStyle(
                         fontSize: 16,
-                        color: theme.colorScheme.tertiaryContainer,
+                        color: colorTheme.tertiaryContainer,
                       ),
                     ),
                   ),
