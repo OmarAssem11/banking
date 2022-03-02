@@ -164,4 +164,12 @@ mixin FirebaseServices {
           .toList(),
     );
   }
+
+  static Future<void> updateEmail(String newEmail) async {
+    await _auth.currentUser!.updateEmail(newEmail);
+  }
+
+  static Future<void> updatePassword(String newPassword) async {
+    await _auth.currentUser!.updatePassword(newPassword);
+  }
 }

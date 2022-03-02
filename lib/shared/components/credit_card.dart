@@ -61,6 +61,7 @@ class CreditCard extends StatelessWidget {
             cardNumber: cardNumber!,
             expiryDate: card.expiryDate,
             cvvCode: card.cvvCode,
+            cardType: CardType.mastercard,
             showBackView: false,
             obscureCardCvv: false,
             obscureCardNumber: false,

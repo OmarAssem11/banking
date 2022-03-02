@@ -57,6 +57,7 @@ class UserProvider with ChangeNotifier {
   void changeEmail(String newEmail) {
     userModel!.email = newEmail;
     notifyListeners();
+    FirebaseServices.updateEmail(newEmail);
     FirebaseServices.storeUpdatedUser(
       oldModel: userModel!,
       email: newEmail,
@@ -66,6 +67,7 @@ class UserProvider with ChangeNotifier {
   void changePassword(String newPassword) {
     userModel!.password = newPassword;
     notifyListeners();
+    FirebaseServices.updatePassword(newPassword);
     FirebaseServices.storeUpdatedUser(
       oldModel: userModel!,
       password: newPassword,
