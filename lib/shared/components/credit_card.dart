@@ -65,7 +65,7 @@ class CreditCard extends StatelessWidget {
             obscureCardNumber: false,
             isHolderNameVisible: true,
             onCreditCardWidgetChange: (_) {},
-            cardBgColor: const Color.fromARGB(255, 168, 118, 0),
+            cardBgColor: const Color.fromARGB(255, 26, 0, 87),
           );
   }
 

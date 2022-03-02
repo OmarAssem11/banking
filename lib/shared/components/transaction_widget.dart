@@ -35,6 +35,7 @@ class TransactionWidget extends StatelessWidget {
             ),
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 name,

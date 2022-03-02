@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
-  static const routeName = '/login';
+  static const routeName = '/login_screen';
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

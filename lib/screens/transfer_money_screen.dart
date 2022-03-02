@@ -4,13 +4,13 @@ import 'package:banking/providers/card_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/shared/components/custom_button.dart';
 import 'package:banking/shared/components/custom_text_form_field.dart';
-import 'package:banking/shared/firebase_error_handler.dart';
+import 'package:banking/shared/error_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TransferMoneyScreen extends StatelessWidget {
   TransferMoneyScreen({Key? key}) : super(key: key);
-  static const routeName = '/transfer';
+  static const routeName = '/transfer_money_screen';
   final _formKey = GlobalKey<FormState>();
   final accountNumberController = TextEditingController();
   final amountController = TextEditingController();

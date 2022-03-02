@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
-  static const routeName = '/register';
+  static const routeName = '/register_screen';
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();

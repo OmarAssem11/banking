@@ -1,7 +1,7 @@
 import 'package:banking/providers/user_provider.dart';
-import 'package:banking/screens/home_screen.dart';
+import 'package:banking/screens/card_screen.dart';
 import 'package:banking/screens/settings_screen.dart';
-import 'package:banking/screens/transactions_screen.dart';
+import 'package:banking/screens/stats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,12 +15,12 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> {
   int selectedScreenIndex = 0;
   List<Widget> screens = const [
-    HomeScreen(),
-    TransactionsScreen(),
+    CardScreen(),
+    StatsScreen(),
     SettingsScreen(),
   ];
   List<String> screensTitles = const [
-    'Home',
+    'Card',
     'Stats',
     'Settings',
   ];
@@ -63,8 +63,8 @@ class _HomeLayoutState extends State<HomeLayout> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.credit_card),
+            label: 'Card',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),

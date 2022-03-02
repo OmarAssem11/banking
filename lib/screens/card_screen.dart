@@ -4,18 +4,18 @@ import 'package:banking/shared/components/credit_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-  static const routeName = '/home_screen';
+class CardScreen extends StatefulWidget {
+  const CardScreen({Key? key}) : super(key: key);
+  static const routeName = '/card_screen';
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CardScreen> createState() => _CardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
     final card = Provider.of<CardProvider>(context).cardModel;
-    final theme = Theme.of(context);
+    final themeColor = Theme.of(context).colorScheme;
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,25 +32,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.surface,
+                    color: themeColor.surface,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(16),
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text(
+                      const Text(
                         'BALANCE',
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '\$ ${card.balance}',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 20,
+                          color: Colors.grey,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: theme.colorScheme.onSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '\$${card.balance}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: themeColor.onSecondary,
                         ),
                       ),
                     ],
@@ -68,22 +74,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.surface,
+                      color: themeColor.surface,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(16),
                       ),
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Transfer money',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onSecondary,
+                            color: themeColor.onSecondary,
                           ),
                         ),
-                        const Spacer(),
+                        const SizedBox(width: 8),
                         const Icon(
                           Icons.arrow_forward_ios_rounded,
                           size: 27,

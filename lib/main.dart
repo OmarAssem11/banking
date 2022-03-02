@@ -5,12 +5,12 @@ import 'package:banking/providers/register_provider.dart';
 import 'package:banking/providers/theme_provider.dart';
 import 'package:banking/providers/transactions_provider.dart';
 import 'package:banking/providers/user_provider.dart';
+import 'package:banking/screens/card_screen.dart';
 import 'package:banking/screens/edit_profile_screen.dart';
-import 'package:banking/screens/home_screen.dart';
 import 'package:banking/screens/login_screen.dart';
 import 'package:banking/screens/register_screen.dart';
 import 'package:banking/screens/settings_screen.dart';
-import 'package:banking/screens/transactions_screen.dart';
+import 'package:banking/screens/stats_screen.dart';
 import 'package:banking/screens/transfer_money_screen.dart';
 import 'package:banking/shared/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,8 +57,8 @@ class MyApp extends StatelessWidget {
           HomeLayout.routeName: (context) => const HomeLayout(),
           LoginScreen.routeName: (context) => LoginScreen(),
           RegisterScreen.routeName: (context) => RegisterScreen(),
-          HomeScreen.routeName: (context) => const HomeScreen(),
-          TransactionsScreen.routeName: (context) => const TransactionsScreen(),
+          CardScreen.routeName: (context) => const CardScreen(),
+          StatsScreen.routeName: (context) => const StatsScreen(),
           SettingsScreen.routeName: (context) => const SettingsScreen(),
           EditProfileScreen.routeName: (context) => const EditProfileScreen(),
           TransferMoneyScreen.routeName: (context) => TransferMoneyScreen(),

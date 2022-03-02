@@ -23,8 +23,8 @@ class ChartBar extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         SizedBox(
-          height: 100,
-          width: 20,
+          height: 80,
+          width: 18,
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [

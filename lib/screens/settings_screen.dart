@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
-  static const routeName = '/settings';
+  static const routeName = '/settings_screen';
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ThemeProvider>(context);

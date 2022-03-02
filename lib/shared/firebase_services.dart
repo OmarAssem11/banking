@@ -3,7 +3,7 @@ import 'package:banking/models/card_model.dart';
 import 'package:banking/models/transaction_model.dart';
 import 'package:banking/models/user_model.dart';
 import 'package:banking/shared/constants.dart';
-import 'package:banking/shared/firebase_error_handler.dart';
+import 'package:banking/shared/error_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -55,7 +55,7 @@ mixin FirebaseServices {
         uId = userCredential.user!.uid;
       }
     } on FirebaseAuthException catch (error) {
-      ErrorHandler.registerError(error);
+      ErrorHandler.loginError(error);
     }
   }
 

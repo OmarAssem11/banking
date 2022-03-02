@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ChartWidget extends StatelessWidget {
-  const ChartWidget({required this.transactions});
+  const ChartWidget({
+    required this.title,
+    required this.transactions,
+  });
+  final String title;
   final List<TransactionModel> transactions;
   List<TransactionModel> get recentTransactions => transactions
       .where(
@@ -46,24 +50,33 @@ class ChartWidget extends StatelessWidget {
         color: Theme.of(context).colorScheme.tertiary,
         borderRadius: const BorderRadius.all(Radius.circular(40)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          children: groupedTransactionsValues
-              .map(
-                (data) => Flexible(
-                  fit: FlexFit.tight,
-                  child: ChartBar(
-                    label: data['day'] as String,
-                    amount: data['amount'] as double,
-                    percentage: totalSpending == 0.0
-                        ? 0.0
-                        : (data['amount'] as double) / totalSpending,
-                  ),
-                ),
-              )
-              .toList(),
-        ),
+      child: Column(
+        children: [
+          const SizedBox(height: 5),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: groupedTransactionsValues
+                  .map(
+                    (data) => Flexible(
+                      fit: FlexFit.tight,
+                      child: ChartBar(
+                        label: data['day'] as String,
+                        amount: data['amount'] as double,
+                        percentage: totalSpending == 0.0
+                            ? 0.0
+                            : (data['amount'] as double) / totalSpending,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
       ),
     );
   }

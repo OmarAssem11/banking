@@ -55,10 +55,6 @@ final lightTheme = ThemeData(
       fontSize: 20,
       color: Colors.black,
     ),
-    labelMedium: TextStyle(
-      color: Colors.grey,
-      fontSize: 14,
-    ),
     bodyText1: TextStyle(
       fontSize: 15,
       color: Colors.black,
@@ -157,10 +153,6 @@ final darkTheme = ThemeData(
     headline6: TextStyle(
       fontSize: 20,
       color: Colors.white,
-    ),
-    labelMedium: TextStyle(
-      color: Colors.grey,
-      fontSize: 14,
     ),
     bodyText1: TextStyle(
       fontSize: 15,

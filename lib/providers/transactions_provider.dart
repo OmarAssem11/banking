@@ -89,6 +89,7 @@ class TransactionsProvider with ChangeNotifier {
 
   Future<void> _getTransactionsModels() async {
     await FirebaseServices.getTransactionsModels(transactions);
+    transactions.sort((a, b) => a.dateTime.compareTo(b.dateTime));
   }
 
   Future<void> _getTransactionsUsers() async {
