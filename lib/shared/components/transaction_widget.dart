@@ -17,7 +17,7 @@ class TransactionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final dateFormat = DateFormat('dd-MMMM  HH:MM');
+    final dateFormat = DateFormat('dd-MMMM  HH:mm');
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 22,

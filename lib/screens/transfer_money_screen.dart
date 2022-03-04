@@ -21,6 +21,7 @@ class TransferMoneyScreen extends StatelessWidget {
       listen: false,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Transfer money'),
       ),
@@ -58,10 +59,10 @@ class TransferMoneyScreen extends StatelessWidget {
                     context,
                     listen: false,
                   ).cardModel;
-                  final pin = card!.pinCode;
-                  final receiverUId = await provider
-                      .getUIdByCardNumber(accountNumberController.text);
                   if (_formKey.currentState!.validate()) {
+                    final pin = card!.pinCode;
+                    final receiverUId = await provider
+                        .getUIdByCardNumber(accountNumberController.text);
                     if (receiverUId != null &&
                         pinCodeController.text == pin &&
                         double.parse(amountController.text) <= card.balance) {

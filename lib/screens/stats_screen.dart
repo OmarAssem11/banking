@@ -21,7 +21,7 @@ class StatsScreen extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(40)),
-              minHeight: 230,
+              minHeight: 290,
               body: Column(
                 children: [
                   ChartWidget(

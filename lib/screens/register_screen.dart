@@ -113,6 +113,7 @@ class RegisterScreen extends StatelessWidget {
                       'LOGIN',
                       style: TextStyle(
                         fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         color: colorTheme.tertiaryContainer,
                       ),
                     ),

@@ -117,7 +117,7 @@ class CreditCard extends StatelessWidget {
                       controller: expiryDateController,
                       text: 'Expiry date',
                       prefix: Icons.date_range,
-                      keyboardType: TextInputType.datetime,
+                      keyboardType: TextInputType.number,
                     ),
                   ),
                   const SizedBox(width: 12),
