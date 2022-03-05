@@ -2,6 +2,8 @@ Banking application using firebase and provider.
 
 add credit card(virtual), transfer money between accounts and more
 
+Light and dark mode
+
 Firebase authentication,
 Firebase firestore,
 Firebase Storage,
