@@ -124,7 +124,8 @@ mixin FirebaseServices {
           .collection('card')
           .doc(docs[i].id)
           .get();
-      if (CardModel.fromJson(cardSnapShot.data()!).cardNumber == cardNumber) {
+      if (cardSnapShot.data() != null &&
+          CardModel.fromJson(cardSnapShot.data()!).cardNumber == cardNumber) {
         id = docs[i].id;
       }
     }

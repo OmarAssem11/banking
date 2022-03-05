@@ -14,6 +14,7 @@ class StatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final transactions =
         Provider.of<TransactionsProvider>(context).transactions;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: transactions.isNotEmpty
           ? SlidingUpPanel(
@@ -21,7 +22,7 @@ class StatsScreen extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(40)),
-              minHeight: 290,
+              minHeight: .35 * screenHeight,
               body: Column(
                 children: [
                   ChartWidget(
@@ -52,7 +53,7 @@ class StatsScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 Image.asset(
                   'assets/images/waiting.png',
-                  height: 200,
+                  height: .25 * screenHeight,
                 ),
               ],
             ),

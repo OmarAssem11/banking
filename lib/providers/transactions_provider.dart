@@ -30,9 +30,9 @@ class TransactionsProvider with ChangeNotifier {
       amount: amount,
       receiverUId: receiverUId,
     );
-    transactions.add(transaction);
+    transactions.insert(0, transaction);
     FirebaseServices.getUserById(receiverUId)
-        .then((value) => transactionsUsers.add(value));
+        .then((value) => transactionsUsers.insert(0, value));
     FirebaseServices.storeTransactionData(
       uId: transaction.senderUId,
       transaction: transaction,
