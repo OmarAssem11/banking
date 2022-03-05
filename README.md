@@ -1,16 +1,15 @@
-# banking
+Banking application using firebase and provider
+add credit card(virtual), transfer money between accounts and more
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Firebase authentication
+Firebase firestore
+Firebase Storage
+Provider state management
+Other packages:
+flutter toast
+image picker
+flutter credit card
+sliding up panel
+intl
+flutter launcher icon
+flutter native splash
