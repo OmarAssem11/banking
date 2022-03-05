@@ -1,8 +1,8 @@
 Banking application using firebase and provider.
 
-add credit card(virtual), transfer money between accounts and more
+Add credit card(virtual), transfer money between accounts and more.
 
-Light and dark mode
+Light and dark mode.
 
 Firebase authentication,
 Firebase firestore,
@@ -12,7 +12,7 @@ Provider state management.
 Other packages:
 flutter toast,
 image picker,
-flutter credit card
+flutter credit card,
 sliding up panel,
 intl,
 flutter launcher icon,
